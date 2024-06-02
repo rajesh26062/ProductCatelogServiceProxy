@@ -1,10 +1,13 @@
 package com.example.ProductCatelogServiceProxy.Controllers;
-
 import com.example.ProductCatelogServiceProxy.Clients.FakeStore.Dtos.FakeStoreProductDto;
 import com.example.ProductCatelogServiceProxy.DTO.ProductDTO;
 import com.example.ProductCatelogServiceProxy.Models.Category;
 import com.example.ProductCatelogServiceProxy.Models.Product;
 import com.example.ProductCatelogServiceProxy.Srevices.iProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +15,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
+
+//    @GetMapping("{id}")
+//    public ResponseEntity<Product> getProduct(@PathVariable("id") Long productId) {
+//        try {
+//          if (productId < 1 ){
+//              throw new IllegalArgumentException("Kuch tho phata he");}
+//            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+//            headers.add("called by somaone", "pagal ho kya tum");
+//            Product product = productService.GetProductById(productId);
+//            return new ResponseEntity<>(product, headers, HttpStatus.OK);
+//        }
+//        catch (Exception exception) {
+//            throw exception;
+//        }
+//    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+private ResponseEntity<String> handleException(IllegalArgumentException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
 
     iProductService productService;
 
@@ -52,4 +75,5 @@ public class ProductController {
         product.setCategory(category);
         return product;
     }
+
 }
