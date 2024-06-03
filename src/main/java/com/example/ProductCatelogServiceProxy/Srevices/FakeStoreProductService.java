@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class FakeStoreProductService implements iProductService {
 
     private RestTemplateBuilder restTemplateBuilder;
